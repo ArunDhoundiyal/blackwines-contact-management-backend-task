@@ -163,7 +163,7 @@ serverInstance.put('/contact/:id', authenticateToken, async(request, response)=>
     try {
         const user = await dataBase.get('SELECT * FROM contact WHERE id = ?', [id]);
         if (!user){
-            return response.status(400).json({error:`Invalid contact Id = ${id}`})
+            return response.status(404).json({error:`Invalid contact Id = ${id}`})
         }
         else{
             const {
@@ -190,7 +190,7 @@ serverInstance.delete('/contact/:id', authenticateToken, async(request, response
     try {
         const checkContact = await dataBase.get('SELECT * FROM contact WHERE id = ?', [id]);
         if (!checkContact){
-            return response.status(400).json({error:`Invalid contact Id = ${id}`})
+            return response.status(404).json({error:`Invalid contact Id = ${id}`})
         }
         else{
             await dataBase.run('DELETE FROM contact WHERE id = ?', [id]);
@@ -208,7 +208,7 @@ serverInstance.get('/contact/:id', authenticateToken, async(request, response)=>
     try {
         const checkContact = await dataBase.get('SELECT * FROM contact WHERE id = ?', [id]);
         if (!checkContact){
-            return response.status(400).json({error:`Invalid contact Id = ${id}, No data found..!`})
+            return response.status(404).json({error:`Invalid contact Id = ${id}, No data found..!`})
         }
         else{
             return response.status(400).json(checkContact)
@@ -237,7 +237,7 @@ serverInstance.get('/contact', authenticateToken, async(request, response)=>{
             parameters.push(email);
         }
         if (conditions.length > 0){
-            query += ` WHERE `+ conditions.join(' OR ');
+            query += ` WHERE `+ conditions.join(' AND ');
         }
 
         const getAllContact = await dataBase.all(query, parameters)
