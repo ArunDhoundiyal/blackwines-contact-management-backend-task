@@ -39,3 +39,5 @@ CREATE TABLE contact(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT, e
 4|address|TEXT|0||0
 5|created_at|TIMESTAMP|0|CURRENT_TIMESTAMP|0
 6|user_id|TEXT|0||0
+
+## Both Tables are Interconnected through user_id of contact table that is a FOREIGN KEY of user table refer to the id
